@@ -1,0 +1,9 @@
+====v0.1====
+3 Nov 2014
+
+-Initial release, based on Conn's final version
+-2 Minor changes from Conn's original patch, in order to conform to bass's
+ restrictions on only being able to skip forward/backward up to 2 anonymous
+ labels at once.  No functional changes made.
+    *$22E9D7: Remove an unnecessary branch instruction
+    *$22EA8B: Swap 2 code branches and the corresponding branch logic

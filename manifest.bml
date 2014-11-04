@@ -1,0 +1,54 @@
+cartridge region=NTSC
+  board type=1A3B revision=11,12,13
+  rom name=program.rom size=0x180000
+  ram name=save.ram size=0x2000
+  map id=rom address=00-6f,80-ff:8000-ffff mask=0x8000
+  map id=ram address=70-7d,f0-ff:0000-ffff
+
+  msu1
+    rom name=msu1.msu size=0x0000
+    track number=1 name="01 Title - Link to the Past.pcm"
+    track number=2 name="02 Hyrule Field Main Theme.pcm"
+    track number=3 name="03 Time of Falling Rain.pcm"
+    track number=4 name="04 The Silly Pink Rabbit!.pcm"
+    track number=5 name="05 Forest of Mystery.pcm"
+    track number=6 name="06 Seal of Seven Maidens.pcm"
+    track number=7 name="07 Kakariko Village.pcm"
+    track number=9 name="09 Dark Golden Land.pcm"
+    track number=10 name="10 Unsealing the Master Sword.pcm"
+    track number=11 name="11 Beginning of the Journey.pcm"
+    track number=12 name="12 Soldiers of Kakariko Village.pcm"
+    track number=13 name="13 Black Mist.pcm"
+    track number=14 name="14 Guessing Game House.pcm"
+    track number=16 name="16 Majestic Castle.pcm"
+    track number=17 name="17 Lost Ancient Ruins.pcm"
+    track number=18 name="18 Dank Dungeons.pcm"
+    track number=19 name="19 Great Victory!.pcm"
+    track number=20 name="20 Safety in the Sanctuary.pcm"
+    track number=21 name="21 Anger of the Guardians.pcm"
+    track number=22 name="22 Dungeon Of Shadows.pcm"
+    track number=23 name="23 Fortune Teller.pcm"
+    track number=24 name="24 Dank Dungeons.pcm"
+    track number=25 name="25 Princess Zelda's Rescue.pcm"
+    track number=26 name="26 Meeting the Maidens.pcm"
+    track number=27 name="27 The Goddess Appears.pcm"
+    track number=28 name="28 Priest of the Dark Order.pcm"
+    track number=29 name="29 Release of Ganon.pcm"
+    track number=30 name="30 Ganon's Message.pcm"
+    track number=31 name="31 The Prince of Darkness.pcm"
+    track number=32 name="32 Power of the Gods.pcm"
+    track number=33 name="33 Staff Roll.pcm"
+    track number=34 name="34 Epilogue - Beautiful Hyrule.pcm"
+    map id=io address=00-3f,80-bf:2000-2007
+
+information
+  title:    The Legend of Zelda: A Link to the Past (MSU-1)
+  name:     Legend of Zelda - A Link to the Past (MSU-1), The
+  region:   NA
+  revision: 1.0
+  board:    SHVC-1A3B-12
+  serial:   SNS-ZL-USA
+  sha256:   8edd9331ee0929d6122d980988bda9e6967646adef16ffe46ffccdf4a9edca1b
+  configuration
+    rom name=program.rom size=0x180000
+    ram name=save.ram size=0x2000
