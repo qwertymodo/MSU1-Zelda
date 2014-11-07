@@ -3,14 +3,11 @@
 // 
 // Author:        qwertymodo
 // Date Created:  1 Nov 2014
-// Date Modified: 3 Nov 2014
+// Date Modified: 7 Nov 2014
 // Assembler:     bass v14
 //
 // Implements MSU-1 audio streaming in The Legend of Zelda: A Link to the Past
-// Original patch by Conn, disassembled by qwertymodo.  This file should produce
-// a patch original to Conn's other than 2 minor changes to account for
-// limitations in bass's anonymous labels.  Neither change affects the
-// functionality of the code.
+// Original patch by Conn, disassembled and continued by qwertymodo.
 //
 // This patch is intended to be applied directly by bass.  Patch should be
 // applied to an unheadered ROM.  Requires expanded ROM, but bass can expand the
@@ -20,11 +17,16 @@
 //
 // Usage: bass -o [romfile] alttp_msu.asm
 //
-// See README for more information
+// See README.md for more information
 //
 //******************************************************************************
 
 arch snes.cpu
+
+macro seek(variable offset) {
+  origin ((offset & $7F0000) >> 1) | (offset & $7FFF)
+  base offset
+}
 
 // Comment out this line if applying to an already expanded ROM
 define EXPAND_ROM()
@@ -35,208 +37,228 @@ if {defined EXPAND_ROM} {
 }
 
 // Header checksum
-origin 0x007FDC
+seek($FFDC)
     dw 0x5BF1 // Checksum complement
     dw 0xA40E // ROM checksum
 
 // the following codes are hooks in the native rom – mainly when music is stored
-// to the controller $012c
-origin 0x0000D9
+// to the controller $012C
+seek($0080D9)
     jsl $22E900
     nop
     nop
 
-origin 0x0000F3
+seek($0080F3)
     jsl $22E950
     nop
     nop
 
-origin 0x00740F
+seek($00F40F)
     jsl $22EA80
     nop
     nop
     nop
 
-origin 0x0079C3
-    jsl $22E9F0
+seek($00F9C3)
+    jsl fade_out
     nop
 
-origin 0x010BFF
+seek($028BFF)
     jsr $FFD0
 
-origin 0x01134F
+seek($02934F)
     jsl $22EA80
     nop
     nop
     nop
 
-origin 0x011A04
-    jsl $22E9F0
+seek($029A04)
+    jsl fade_out
     nop
 
-origin 0x011B14
-    jsl $22E9F0
+seek($029B14)
+    jsl fade_out
     nop
 
-origin 0x011D22
+// Track 0x08
+seek($029D22)
     jsl $22EB30
     nop
 
-origin 0x012027
-    jsl $22E9F0
+seek($02A027)
+    jsl fade_out
     nop
 
-origin 0x0120C1
+// Track 0x20
+seek($02A0C1)
     jsl $22ED40
     nop
 
-origin 0x012141
+// Track 0x21
+seek($02A141)
     jsl $22ED70
     nop
 
-origin 0x012AB1
-    jsl $22E9F0
+seek($02AAB1)
+    jsl fade_out
     nop
 
-origin 0x012E7E
-    jsl $22E9F0
+seek($02AE7E)
+    jsl fade_out
     nop
 
-origin 0x013225
+// Track 0x08
+seek($02B225)
     jsl $22EB30
     nop
 
-origin 0x017FD0
+seek($02FFD0)
     jsl $22EB90
     rts
 
-origin 0x028928
+// Track 0x0A
+seek($058928)
     jsl $22EB60
     nop
 
-origin 0x02CC5F
+// Track 0x0C
+seek($05CC5F)
     jsl $22EBC0
     nop
 
-origin 0x0330D8
-    jsl $22EA20
+seek($06B0D8)
+    jsl map_open
     nop
 
-origin 0x033112
+seek($06B112)
     jsl $22EA50
     nop
 
-origin 0x034621
+// Track 0x1B
+seek($06C621)
     jsl $22EC80
     nop
 
-origin 0x034847
+// Track 0x1B
+seek($06C847)
     jsl $22EC80
     nop
 
-origin 0x03AA9C
-    jsl $22EA20
+seek($07AA9C)
+    jsl map_open
     nop
 
-origin 0x03EB90
+seek($07EB90)
     jsl $22EA50
     nop
 
-origin 0x044606
+seek($08C606)
     jml $22EDD7
     nop
+
+// Track 0x1A
+seek($08C60B)
     jsl $22EC50
     nop
 
-origin 0x044D07
-    jsl $22E9F0
+seek($08CD07)
+    jsl fade_out
     nop
 
-origin 0x04505C
+seek($08D05C)
     jsl $22EA50
     nop
 
-origin 0x048D2C
-    jsl $22EA20
+seek($098D2C)
+    jsl map_open
     nop
 
-origin 0x04A234
+// Track 0x15
+seek($09A234)
     jsl $22EAB0
     nop
 
-origin 0x04EE44
+// Track 0x13
+seek($09EE44)
     jsl $22EC20
     nop
 
-origin 0x04F2B2
-    jsl $22E9F0
+seek($09F2B2)
+    jsl fade_out
     nop
 
-origin 0x04F4A6
+// Track 0x0B
+seek($09F4A6)
     jsl $22EAD0
     nop
 
-origin 0x04F50F
-    jsl $22E9F0
+seek($09F50F)
+    jsl fade_out
     nop
 
-origin 0x053940
+seek($0AB940)
     jsl $22EB00
     nop
     nop
     nop
 
-origin 0x053A1E
-    jsl $22EA20
+seek($0ABA1E)
+    jsl map_open
     nop
 
-origin 0x053C90
+seek($0ABC90)
     jsl $22EA50
     nop
 
-origin 0x056FB5
+seek($0AEFB5)
     jsl $22EA50
     nop
 
-origin 0x064DA7
+// Track 0x0B
+seek($0CCDA7)
     jsl $22EAD0
     nop
 
-origin 0x064F7A
-    jsl $22E9F0
+seek($0CCF7A)
+    jsl fade_out
     nop
 
-origin 0x067105
-    jsl $22E9F0
+seek($0CF105)
+    jsl fade_out
     nop
 
-origin 0x073D16
+// Track 0x22
+seek($0EBD16)
     jsl $22EDA0
     nop
 
-origin 0x075A31
-    jsl $22EA20
+seek($0EDA31)
+    jsl map_open
     nop
 
-origin 0x0E8D39
+// Track 0x1E
+seek($1D8D39)
     jsl $22ECE0
     nop
 
-origin 0x0E92F1
+// Track 0x1F
+seek($1D92F1)
     jsl $22ED10
     nop
 
-origin 0x0EFCCC
+// Track 0x0E
+seek($1DFCCC)
     jsl $22EBF0
     nop
 
-origin 0x0F53FA
+// Track 0x1D
+seek($1ED3FA)
     jsl $22ECB0
     nop
 
 // this code selects whether the current theme is repeated or played one
 // time (store to $2007)
-origin 0x116880
+seek($22E880)
     lda $0129   // $0129 was free ram, it is a mirror of the current played theme
     cmp #$01    // compares now with the themes 01,08,... which do not repeat
     bne +
@@ -273,14 +295,14 @@ origin 0x116880
 +;  lda #$03    // if no match it is a theme that repeats (#$03)
     rts
 
-origin 0x116900
+seek($22E900)
     lda $4210   // native code overwritten by hook
     jsr $E910   // main MSU load code
     jsr $EE30   // play msu routine whin stream ready
     lda $012c   // native code overwritten by hook
     rtl
 
-origin 0x116910
+seek($22E910)
     lda $0133
     bne +       // if $0133 is #$0 return
     rts
@@ -319,7 +341,7 @@ origin 0x116910
 
 // this routine checks whether music register has to be muted -> this is the case
 // when MSU is enabled
-origin 0x116950
+seek($22E950)
     sta $0133   // native code
     pha
     lda $2002   // check if MSU is enabled
@@ -337,7 +359,7 @@ origin 0x116950
     rtl
 
 // SPC fallback (sd2snes only or bsnes 0.89 ff)
-origin 0x116970
+seek($22E970)
     lda $2000   // load MSU status
     and #$08    // isolate error bit (track not found)
     bne +
@@ -351,7 +373,7 @@ origin 0x116970
     rts
 
 // track selector - MSU main code
-origin 0x116990
+seek($22E990)
     lda $0133   // load music register
     cmp #$F4    // check if mute, if yes return
     bne +
@@ -395,7 +417,8 @@ origin 0x116990
     rts
 
 // fade-out volume level decrease
-origin 0x1169F0
+seek($22E9F0)
+fade_out:
     lda $2002   // check msu enabled
     cmp #$53
     bne ++      // if not -> native fade-out routine
@@ -414,7 +437,8 @@ origin 0x1169F0
     rtl
 
 // map music volume decrease
-origin 0x116A20
+seek($22EA20)
+map_open:
     lda $2002
     cmp #$53
     bne +
@@ -430,7 +454,7 @@ origin 0x116A20
     rtl
 
 // restore full volume when back to game from map
-origin 0x116A50
+seek($22EA50)
     lda $2002
     cmp #$53
     bne +
@@ -446,7 +470,7 @@ origin 0x116A50
     rtl
 
 // lower volume level when entering a house
-origin 0x116A80
+seek($22EA80)
     cmp #$FF
     bne +
     rtl
@@ -474,7 +498,7 @@ origin 0x116A80
 
 // these codes cover mainly all ingame spc changes to play the specific msu tracks
 // it loads the track to be stored to $2004 and jumps to $EDD0 then
-origin 0x116AB0
+seek($22EAB0)
     lda $2002
     cmp #$53
     bne +
@@ -495,7 +519,7 @@ origin 0x116AB0
     sta $012c
     rtl
 
-origin 0x116AD0
+seek($22EAD0)
     lda $2002
     cmp #$53
     bne +
@@ -516,7 +540,7 @@ origin 0x116AD0
     sta $012C
     rtl
 
-origin 0x116B00
+seek($22EB00)
     bne +
     ldx #$F3
 +;  lda $2002
@@ -537,7 +561,7 @@ origin 0x116B00
 +;  stx $012C
     rtl
 
-origin 0x116B30
+seek($22EB30)
     lda $2002
     cmp #$53
     bne +
@@ -558,7 +582,7 @@ origin 0x116B30
     sta $012C
     rtl
 
-origin 0x116B60
+seek($22EB60)
     lda $2002
     cmp #$53
     bne +
@@ -579,7 +603,7 @@ origin 0x116B60
     sta $012C
     rtl
 
-origin 0x116B90
+seek($22EB90)
     sep #$20
     lda $2002
     cmp #$53
@@ -603,7 +627,7 @@ origin 0x116B90
     stx $012C
     rtl
 
-origin 0x116BC0
+seek($22EBC0)
     lda $2002
     cmp #$53
     bne +
@@ -624,7 +648,7 @@ origin 0x116BC0
     sta $012C
     rtl
 
-origin 0x116BF0
+seek($22EBF0)
     lda $2002
     cmp #$53
     bne +
@@ -645,7 +669,7 @@ origin 0x116BF0
     sta $012C
     rtl
 
-origin 0x116C20
+seek($22EC20)
     lda $2002
     cmp #$53
     bne +
@@ -666,7 +690,7 @@ origin 0x116C20
     sta $012C
     rtl
 
-origin 0x116C50
+seek($22EC50)
     lda $2002
     cmp #$53
     bne +
@@ -685,7 +709,7 @@ origin 0x116C50
     sta $012C
     rtl
 
-origin 0x116C80
+seek($22EC80)
     lda $2002
     cmp #$53
     bne +
@@ -704,7 +728,7 @@ origin 0x116C80
     sta $012C
     rtl
 
-origin 0x116CB0
+seek($22ECB0)
     lda $2002
     cmp #$53
     bne +
@@ -725,7 +749,7 @@ origin 0x116CB0
     sta $012C
     rtl
 
-origin 0x116CE0
+seek($22ECE0)
     lda $2002
     cmp #$53
     bne +
@@ -744,7 +768,7 @@ origin 0x116CE0
     sta $012C
     rtl
 
-origin 0x116D10
+seek($22ED10)
     lda $2002
     cmp #$53
     bne +
@@ -765,7 +789,7 @@ origin 0x116D10
     sta $012C
     rtl
 
-origin 0x116D40
+seek($22ED40)
     lda $2002
     cmp #$53
     bne +
@@ -786,7 +810,7 @@ origin 0x116D40
     sta $012C
     rtl
 
-origin 0x116D70
+seek($22ED70)
     lda $2002
     cmp #$53
     bne +
@@ -807,7 +831,7 @@ origin 0x116D70
     sta $012C
     rtl
 
-origin 0x116DA0
+seek($22EDA0)
     lda $2002
     cmp #$53
     bne +
@@ -828,13 +852,13 @@ origin 0x116DA0
     sta $012C
     rtl
 
-origin 0x116DD0
+seek($22EDD0)
     sta $0130
     sta $012C
     rtl
 
 // code when defeated a boss to let acquire crystal play until end before loading sage in crystal theme
-origin 0x116DD7
+seek($22EDD7)
     lda $2002
     cmp #$53
     beq ++
@@ -849,7 +873,7 @@ origin 0x116DD7
 +;  jml $08C613
 
 // code to play msu
-origin 0x116E30
+seek($22EE30)
     lda $0127   // check if new track is induced
     beq +
     bit $2000   // check msu ready
