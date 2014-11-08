@@ -48,7 +48,7 @@ information
   revision: 1.0
   board:    SHVC-1A3B-12
   serial:   SNS-ZL-USA
-  sha256:   8edd9331ee0929d6122d980988bda9e6967646adef16ffe46ffccdf4a9edca1b
+  sha256:   9fafc2a6b7bd8b03aaddc3418bde6626aebaf44d8ac5042e174f73b0002b7b55
   configuration
     rom name=program.rom size=0x180000
     ram name=save.ram size=0x2000
